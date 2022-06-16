@@ -26,7 +26,8 @@ impl Board {
         )
     }
 
-    fn set(&mut self, row: usize, col: usize, val: Character) {
+    fn set(&mut self, row: usize, col: usize, val: &Character) {
+        let val = val.to_owned();
         if row == 1 {
             self.0[col - 1] = val;
         } else if row == 2 {
@@ -83,16 +84,16 @@ fn main() {
 }
 
 fn main_loop(mut board: Board) {
-    let mut turn = &Character::X;
+    let mut turn = Character::X;
     loop {
         board.print_board();
 
-        let (row, col) = get_user_choice(turn, &board);
-        board.set(row, col, turn.to_owned());
+        let (row, col) = get_user_choice(&turn, &board);
+        board.set(row, col, &turn);
 
         turn = match turn {
-            Character::X => &Character::O,
-            Character::O => &Character::X,
+            Character::X => Character::O,
+            Character::O => Character::X,
             Character::E => panic!("Turn should never be Character::E."),
         };
     }
