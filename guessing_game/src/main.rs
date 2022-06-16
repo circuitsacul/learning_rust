@@ -1,7 +1,6 @@
-use std::io;
-use std::cmp::Ordering;
 use rand::Rng;
-
+use std::cmp::Ordering;
+use std::io;
 
 fn main() {
     println!("Guess the number!");
@@ -17,15 +16,13 @@ fn main() {
             .read_line(&mut guess)
             .expect("failed to read line");
 
-        let guess = match guess
-            .trim()
-            .parse::<u32>() {
-                Ok(num) => num,
-                Err(_) => {
-                    println!("Please pass a positive number.");
-                    continue;
-                }
-            };
+        let guess = match guess.trim().parse::<u32>() {
+            Ok(num) => num,
+            Err(_) => {
+                println!("Please pass a positive number.");
+                continue;
+            }
+        };
 
         println!("You guessed {}", guess);
 
@@ -33,7 +30,7 @@ fn main() {
             Ordering::Equal => {
                 println!("Correct!");
                 break;
-            },
+            }
             Ordering::Greater => println!("Too big."),
             Ordering::Less => println!("Too small."),
         }
