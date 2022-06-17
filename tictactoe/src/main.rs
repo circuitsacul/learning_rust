@@ -35,10 +35,10 @@ fn get_user_choice(turn: &Character, board: &Board) -> (usize, usize) {
 
     if board.get(row, col) != &Character::E {
         println!("That spot is already occupied!");
-        return get_user_choice(turn, board);
+        get_user_choice(turn, board)
+    } else {
+        (row, col)
     }
-
-    (row, col)
 }
 
 fn get_numeric_input(prompt: &str, board: &Board) -> usize {
@@ -61,8 +61,8 @@ fn get_numeric_input(prompt: &str, board: &Board) -> usize {
 
     if inp < 1 || inp > 3 {
         println!("Please input a number between 1 and 3 inclusive.");
-        return get_numeric_input(prompt, board);
+        get_numeric_input(prompt, board)
+    } else {
+        inp
     }
-
-    inp
 }
