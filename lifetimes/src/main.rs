@@ -6,6 +6,9 @@ fn main() {
         *lg
     };
     println!("{}", lg);
+
+    static_only("hello, world!");
+    // static_only("hello, world!".to_string().as_str())  // doesn't have a static lifetime
 }
 
 fn largest<'a>(a: &'a i64, b: &'a i64) -> &'a i64 {
@@ -14,4 +17,10 @@ fn largest<'a>(a: &'a i64, b: &'a i64) -> &'a i64 {
     } else {
         b
     }
+}
+
+fn static_only(string: &'static str) -> &'static str {
+    // 'static lifetime refers to variables hardcoded into the program
+    // itself, and live for the entire lifetime of the program itself.
+    string
 }
