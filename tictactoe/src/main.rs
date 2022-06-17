@@ -1,81 +1,10 @@
+use crate::board::Board;
+use crate::character::Character;
 use std::io;
 use std::io::Write;
 
-#[derive(Debug)]
-#[derive(PartialEq)]
-#[derive(Clone)]
-enum Character {
-    X,
-    O,
-    E,
-}
-
-#[derive(Debug)]
-struct Board([Character; 3], [Character; 3], [Character; 3]);
-
-impl Board {
-    fn make_row() -> [Character; 3] {
-        [Character::E, Character::E, Character::E]
-    }
-
-    fn new() -> Board {
-        Board(
-            Board::make_row(),
-            Board::make_row(),
-            Board::make_row(),
-        )
-    }
-
-    fn set(&mut self, row: usize, col: usize, val: &Character) {
-        let val = val.to_owned();
-        if row == 1 {
-            self.0[col - 1] = val;
-        } else if row == 2 {
-            self.1[col - 1] = val;
-        } else if row == 3 {
-            self.2[col - 1] = val;
-        } else {
-            panic!("Received invalid row.");
-        }
-    }
-
-    fn get(&self, row: usize, col: usize) -> &Character {
-        if row == 1 {
-            return &self.0[col - 1];
-        } else if row == 2 {
-            return &self.1[col - 1];
-        } else if row == 3 {
-            return &self.2[col - 1];
-        } else {
-            panic!("Invalid row")
-        }
-    }
-
-    fn print_board(&self) {
-        fn print_char(char: &Character) {
-            if char == &Character::X {
-                print!(" X ");
-            } else if char == &Character::O {
-                print!(" O ");
-            } else if char == &Character::E {
-                print!("   ");
-            }
-        }
-
-        for row in [&self.0, &self.1, &self.2] {
-            for char in row {
-                print!("|");
-                print_char(char);
-            }
-            print!("|");
-            print!("\n");
-            for _ in 0..13 {
-                print!("-");
-            }
-            print!("\n");
-        }
-    }
-}
+pub mod board;
+pub mod character;
 
 fn main() {
     let board = Board::new();
