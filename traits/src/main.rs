@@ -1,3 +1,5 @@
+mod advanced;
+
 trait Summary {
     fn summarize(&self) -> String;
 }
