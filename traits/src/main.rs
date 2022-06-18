@@ -1,5 +1,7 @@
 mod advanced;
 
+use advanced::demo as advanced_demo;
+
 trait Summary {
     fn summarize(&self) -> String;
 }
@@ -44,4 +46,6 @@ fn main() {
 
     println!("{}", tweet.summarize());
     println!("{}", news.summarize());
+
+    advanced_demo();
 }
