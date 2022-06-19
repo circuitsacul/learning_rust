@@ -1,5 +1,7 @@
 use std::io;
 
+mod ambig_trait;
+
 fn main() {
     println!("Hello, world!");
     demo_result();
@@ -7,6 +9,8 @@ fn main() {
     demo_array();
     demo_let_as_fn_ret_type();
     demo_if_expr();
+
+    ambig_trait::demo();
 }
 
 // if as an expression
