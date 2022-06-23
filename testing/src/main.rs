@@ -1,6 +1,5 @@
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 use serde_json::value::Serializer;
-
 
 #[derive(Debug, Serialize, Deserialize)]
 enum Field<T> {
@@ -25,17 +24,20 @@ impl<T> Field<T> {
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Point {
-    #[serde(skip_serializing_if="Field::is_default", default)]
+    #[serde(skip_serializing_if = "Field::is_default", default)]
     x: Field<i32>,
-    #[serde(skip_serializing_if="Field::is_default", default)]
+    #[serde(skip_serializing_if = "Field::is_default", default)]
     y: Field<i32>,
-    #[serde(skip_serializing_if="Field::is_default", default)]
+    #[serde(skip_serializing_if = "Field::is_default", default)]
     name: Field<String>,
 }
 
-
 fn main() {
-    let point = Point{x: Field::Value(1), y: Field::Default, name: Field::Default};
+    let point = Point {
+        x: Field::Value(1),
+        y: Field::Default,
+        name: Field::Default,
+    };
     let res = point.serialize(Serializer).unwrap();
     println!("{:?}", res.to_string());
 
