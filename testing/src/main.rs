@@ -1,46 +1,56 @@
-use serde::{Deserialize, Serialize};
-use serde_json::value::Serializer;
+use std::time::Instant;
+use std::sync::Arc;
+use std::rc::Rc;
 
-#[derive(Debug, Serialize, Deserialize)]
-enum Field<T> {
-    Default,
-    Value(T),
+#[derive(Clone)]
+struct User {
+    _is_bot: bool,
+    _name: String,
+    _avatar: Option<String>,
 }
 
-impl<T> Default for Field<T> {
-    fn default() -> Self {
-        Self::Default
-    }
-}
-
-impl<T> Field<T> {
-    fn is_default(&self) -> bool {
-        match self {
-            Self::Default => true,
-            Self::Value(_) => false,
+impl User {
+    pub fn new() -> Self {
+        Self {
+            _is_bot: true,
+            _name: "CircuitSacul".to_string(),
+            _avatar: Some("skldfja;dlfkjas;dklfj;adsljfa;kldfja;".to_string()),
         }
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
-struct Point {
-    #[serde(skip_serializing_if = "Field::is_default", default)]
-    x: Field<i32>,
-    #[serde(skip_serializing_if = "Field::is_default", default)]
-    y: Field<i32>,
-    #[serde(skip_serializing_if = "Field::is_default", default)]
-    name: Field<String>,
-}
-
 fn main() {
-    let point = Point {
-        x: Field::Value(1),
-        y: Field::Default,
-        name: Field::Default,
-    };
-    let res = point.serialize(Serializer).unwrap();
-    println!("{:?}", res.to_string());
+    const N: i64 = 100_000_000;
+    {
+        let _user = User::new();
 
-    let point: Point = serde_json::from_value(res).unwrap();
-    println!("{:?}", point);
+        let now = Instant::now();
+        for _ in 0..N {
+            let _user = _user.clone();
+        }
+        let elapsed = now.elapsed();
+        println!("Elapsed: {:.2?}", elapsed);
+    }
+
+    {
+        let _user = Arc::new(User::new());
+
+        let now = Instant::now();
+        for _ in 0..N {
+            let _user = _user.clone();
+        }
+        let elapsed = now.elapsed();
+        println!("Elapsed: {:.2?}", elapsed); 
+    }
+
+    {
+        let _user = Rc::new(User::new());
+
+        let now = Instant::now();
+        for _ in 0..N {
+            let _user = _user.clone();
+        }
+        let elapsed = now.elapsed();
+        println!("Elapsed: {:.2?}", elapsed); 
+    }
 }

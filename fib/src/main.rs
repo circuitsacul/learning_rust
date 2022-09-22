@@ -3,12 +3,12 @@ use std::time::Instant;
 
 
 fn fib(n: u32) -> BigUint {
-    let mut last = 1_i32.to_biguint().unwrap();
-    let mut curr = 1_i32.to_biguint().unwrap();
-
     if n == 1 || n == 2 {
         return 1_i32.to_biguint().unwrap();
     }
+
+    let mut last = 1_i32.to_biguint().unwrap();
+    let mut curr = 1_i32.to_biguint().unwrap();
 
     for _ in 0..(n - 2) {
         let result = last + &curr;
